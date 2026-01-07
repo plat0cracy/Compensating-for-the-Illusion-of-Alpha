@@ -1,7 +1,70 @@
-This project empirically compares the explanatory power of the Capital Asset Pricing Model (CAPM) and the Fama–French Three-Factor Model using historical asset return data. The analysis focuses on evaluating how well each model explains excess returns through formal econometric testing, rather than on investment performance or portfolio construction.
+# CAPM vs. Fama–French Three-Factor Model  
+**Empirical Comparison of Explanatory Power**
 
-Monthly excess returns are regressed on their respective risk factors to estimate factor loadings and abnormal returns (alpha). The models are assessed using statistical significance of coefficients, goodness-of-fit measures, and hypothesis tests on alpha to evaluate whether additional factors improve explanatory power relative to CAPM.
+---
 
-To ensure valid inference, the project includes diagnostic and robustness checks for key time-series assumptions, including tests for serial correlation and heteroskedasticity. Robust standard errors are applied where appropriate to account for potential violations of classical assumptions. The results are interpreted in an asset-pricing context to assess whether the Fama–French Three-Factor Model provides a statistically meaningful improvement over CAPM.
+## Data
 
-Overall, the project demonstrates the use of structured statistical analysis to compare competing theoretical models, quantify uncertainty, and communicate empirical findings clearly—skills central to applied econometrics and consulting-style problem solving.
+The analysis uses monthly U.S. equity return data constructed from publicly available sources. Asset returns are converted to **excess returns** by subtracting the risk-free rate. Factor data for the market excess return, size (SMB), and value (HML) are obtained from the Fama–French data library and aligned by month with the return series.
+
+The final dataset consists of a balanced monthly time series covering the same sample period across all models. All variables are expressed in percentage terms and checked for missing observations prior to estimation.
+
+---
+
+## Methodology
+
+The project evaluates the Capital Asset Pricing Model (CAPM) and the Fama–French Three-Factor Model using **time-series regressions of excess returns on risk factors**.
+
+## CAPM Specification
+
+R_t − R_{f,t} = α + β_m (R_{m,t} − R_{f,t}) + ε_t
+
+
+
+### Fama–French Three-Factor Specification
+
+\[
+R_t - R_{f,t} = \alpha
++ \beta_m \left( R_{m,t} - R_{f,t} \right)
++ \beta_s \, \text{SMB}_t
++ \beta_h \, \text{HML}_t
++ \varepsilon_t
+\]
+
+The primary quantities of interest are:
+- **Alpha (\(\alpha\))** as a test of abnormal returns  
+- **Factor loadings (\(\beta\))** and their statistical significance  
+- **Model fit (\(R^2\))** as a measure of explanatory power  
+
+Nested model comparison is used to assess whether the additional Fama–French factors provide incremental explanatory power beyond CAPM.
+
+---
+
+## Specification and Diagnostic Tests
+
+To validate time-series regression assumptions, the following diagnostic checks are conducted:
+
+- Multicollinearity assessed using variance inflation factors (VIF)
+- Serial correlation tested using the Breusch–Godfrey test
+- Robust inference implemented using Newey–West standard errors to account for heteroskedasticity and autocorrelation
+
+These checks ensure valid statistical inference under potential violations of classical OLS assumptions.
+
+---
+
+## Results
+
+The Fama–French Three-Factor Model exhibits higher explanatory power than CAPM, reflected in improved goodness-of-fit measures and reduced unexplained variation in excess returns. Estimated alphas are smaller and less statistically significant under the three-factor specification, indicating that returns attributed to abnormal performance under CAPM are largely explained by exposure to size and value factors.
+
+Formal model comparison supports the conclusion that the additional factors in the Fama–French model provide statistically meaningful information beyond the market factor alone. Robustness checks using Newey–West standard errors do not materially affect the qualitative conclusions.
+
+---
+
+## Interpretation
+
+The results indicate that CAPM omits relevant sources of systematic risk captured by the Fama–French size and value factors. The reduction in estimated alpha under the three-factor model highlights the importance of correct model specification when evaluating abnormal returns and supports the use of multi-factor frameworks in empirical asset pricing.
+
+---
+
+## Repository Structure
+
